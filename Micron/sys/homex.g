@@ -1,22 +1,16 @@
-; homex.g
-; called to home the X axis
+M400                   ; make sure everything has stopped before we change the motor currents
+M915 H200 X Y S2 R0 F0 ; set X and Y to sensitivity 3, do nothing when stall, unfiltered
+M913 X40 Y40           ; drop motor currents to 20%
 
-M400                   ; Wait for all moves to stop
-G91                    ; Use relative moves
-G1 H2 X0.1             ; Move X a small amount to enable
-M400                   ; Wait for all moves to stop
-G4 P200                ; Delay to allow TMC to detect stopped state
-M913 X40 Y40           ; Limit X motor power to avoid destructive behavior if stall doesn't trigger
-G4 P200                ; Delay to ensure settings are made
-G1 H2 Z5 F2500         ; Lift Z relative to current position
-G1 H2 X-5 F2000        ; Back away from endstop
-M400                   ; Wait for all moves to stop
-M915 P0 S-20 H200 R0   ; Configure stall detect
-G4 P200                ; Delay to ensure settings are made
-G1 H1 X200 F3600       ; Move to end of axis
-G1 X-1 F3000           ; Move away from stop and clear stall
-G1 H2 Z-5 F2500        ; Return Z to original position
-M400                   ; Wait for all moves to stop
-G90                    ; Absolute positioning
-M913 X100              ; Back to full power
-M915 P0 S20 H200 R1    ; Report any stalls
+G91                    ; use relative positioning
+G1 H2 X1.0 Y1.0 F300   ; energise motors and move them 1mm in the +X direction to ensure they are not stalled
+G1 H2 Z3 F5000         ; lift Z 3mm
+G1 H1 X200 F3000       ; move to the front up to 400mm, stopping at the endstop
+G1 X-5 F2000           ; move away from end
+G1 H1 X200 F3000       ; move to the front up to 400mm, stopping at the endstop
+G1 X-2 F2000           ; move away from end
+G1 H2 Z-3 F1200        ; lower Z
+G90                    ; back to absolute positioning
+
+M400                   ; make sure everything has stopped before we reset the motor currents
+M913 X100 Y100         ; motor currents back to 100%
