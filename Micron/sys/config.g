@@ -42,7 +42,7 @@ M84 S30                                                              ; Set idle 
 
 ; Axis Limits
 M208 X0 Y-10 Z-10 S1                                                 ; set axis minima
-M208 X180 Y186 Z180 S0                                                ; set axis maxima
+M208 X180 Y186 Z180 S0                                               ; set axis maxima
 
 ; Endstops
 M574 X2 S3                                                           ; configure sensorless endstop for high end on X
@@ -57,7 +57,7 @@ G31 P500 X0 Y30 Z0                                                   ; set Z pro
 M557 X15:165 Y0:145 P3                                               ; Define bed mesh grid (inductive probe, positions include the Y offset!)
                      
 ; Bed Heater
-M308 S0 P"temp0" Y"thermistor" T100000 B4092                         ; configure sensor 0 as thermistor on pin bedtemp
+M308 S0 P"temp0" Y"thermistor" T100000 B3950 A"Heater Bed"           ; configure sensor 0 as thermistor on pin bedtemp
 M950 H0 C"out1" T0 Q10                                               ; create bed heater output on out0 and map it to sensor 0 PWM 5Hz SSR
 M307 H0 B0 S1.00                                                     ; disable bang-bang mode for the bed heater and set PWM limit
 M140 H0                                                              ; map heated bed to heater 0
@@ -68,6 +68,9 @@ M308 S1 P"121.temp1" Y"thermistor" T100000 B4725 C7.06e-8  A"Nozzle" ; configure
 M950 H1 C"121.out0" T1                                               ; create nozzle heater output on 121.out0 and map it to sensor 1
 M307 H1 B0 S1.00                                                     ; disable bang-bang mode for heater  and set PWM limit
 M143 H1 S300     
+
+; Chamber thermistor
+M308 S2 P"121.temp0" Y"thermistor" T100000 B3950 A"Chamber Thermistor"
 
 ; Fans
 M950 F0 C"out5" Q500                                                 ; create fan 0 on pin out5 and set its frequency
