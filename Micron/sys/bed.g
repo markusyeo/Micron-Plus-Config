@@ -33,5 +33,4 @@ while move.calibration.initial.deviation > 0.005
 	continue
 echo "Final deviation: " ^ move.calibration.initial.deviation
 M558 K0 F600:180
-G28 Z
-
+M402
