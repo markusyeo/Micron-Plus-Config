@@ -31,13 +31,13 @@ M350 X16 Y16 Z16 E16 I1                                              ; configure
 M92 X100.00 Y100.00 Z400.00 E705.50                                  ; set steps per mm
 
 M566 X450.00 Y450.00 Z240.00 E300.00                                 ; set maximum instantaneous speed changes (mm/min)
-M203 X18000.00 Y18000.00 Z1200.00 E3600.00                           ; set maximum speeds (mm/min)
-M201 X8000.00 Y8000.00 Z350.00 E600.00                               ; set accelerations (mm/s^2)
+M203 X15000.00 Y15000.00 Z1200.00 E3600.00                           ; set maximum speeds (mm/min)
+M201 X4000.00 Y4000.00 Z350.00 E600.00                               ; set accelerations (mm/s^2)
 
 ; Stepper driver currents
 ; set motor currents (mA) and motor idle factor in per cent
 ; Drive currents
-M906 X1250 Y1250 Z800 E600 I30                                       ; set motor currents (mA) and motor idle factor in per cent
+M906 X1000 Y1000 Z800 E600 I30                                       ; set motor currents (mA) and motor idle factor in per cent
 M84 S30                                                              ; Set idle timeout
 
 ; Axis Limits
@@ -52,9 +52,9 @@ M574 Y2 S3                                                           ; configure
 M671 X-45:-45:225:225 Y-7:231:231:-7 S20                             ; Define Z belts locations (Front_Left, Back_Left, Back_Right, Front_Right)
 
 ; Z-Probe
-M558 K0 P8 C"^121.io0.in" T18000 F600:180 H5 A10 S0.01               ; set Z probe type to KLICKY and the dive height + speeds
+M558 K0 P8 C"^121.io0.in" T12000 F600:180 H3 A10 S0.005              ; set Z probe type to KLICKY and the dive height + speeds
 G31 P500 X0 Y30 Z0                                                   ; set Z probe trigger value, offset and trigger height
-M557 X15:165 Y0:145 P3                                               ; Define bed mesh grid (inductive probe, positions include the Y offset!)
+M557 X15:165 Y35:165 P6:6                                            ; Define bed mesh grid (inductive probe, positions include the Y offset!)
                      
 ; Bed Heater
 M308 S0 P"temp0" Y"thermistor" T100000 B3950 A"Heater Bed"           ; configure sensor 0 as thermistor on pin bedtemp
@@ -70,7 +70,7 @@ M307 H1 B0 S1.00                                                     ; disable b
 M143 H1 S300     
 
 ; Chamber thermistor
-M308 S2 P"121.temp0" Y"thermistor" T100000 B3950 A"Chamber Thermistor"
+M308 S2 P"121.temp0" Y"thermistor" T100000 B3950 A"Chamber"
 
 ; Fans
 M950 F0 C"out5" Q500                                                 ; create fan 0 on pin out5 and set its frequency
@@ -81,6 +81,8 @@ M950 F2 C"121.out1" Q500                                             ; create fa
 M106 P2 C"Partcooling Fan" S0 H-1                                    ; set fan 2 name and value. Thermostatic control is turned off
 M950 F3 C"121.out2" Q500                                             ; create fan 3 on pin 121.out2 and set its frequency
 M106 P3 C"Heatsink Fan" S0 H1 T45                                    ; set fan 3 name and value. Thermostatic control is turned on
+M950 F4 C"out3" Q500                                                 ; create fan 4 on pin ou3 and set its frequency
+M106 P4 C"3DPF" S0 H-1                                               ; set fan 4 name and value. Thermostatic control is turned off
 
 ; Tools
 M563 P0 S"Hotend" D0 H1 F2                                           ; define tool 0
